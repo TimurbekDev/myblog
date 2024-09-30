@@ -1,5 +1,5 @@
 import { appConfig, dbConfig } from '@config';
-import { User, UserModule } from '@modules';
+import { Article, ArticleModule, User, UserModule } from '@modules';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
@@ -22,15 +22,16 @@ import { SequelizeModule } from '@nestjs/sequelize';
         database: config.get<string>('dbConfig.dbName'),
         autoLoadModels: true,
         synchronize: true,
-        models: [User],
+        models: [User,Article],
         logging: false,
         sync: {
           alter: true,
           force: false
-        },
+        }
       }),
     }),
-    UserModule
+    UserModule,
+    ArticleModule
   ],
   controllers: [],
   providers: [

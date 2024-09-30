@@ -6,7 +6,7 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function startApp() {
   const app = await NestFactory.create(AppModule,
-    { logger: false });
+    { });
 
   const configService = app.get(ConfigService)
 

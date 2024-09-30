@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { User } from "./schemas";
 import { UserController } from "./user.controller";
@@ -6,6 +6,7 @@ import { UserService } from "./user.service";
 import { MulterModule } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
 import * as path from "path";
+import { Article, ArticleModule } from "../articles";
 
 @Module({
     imports: [
@@ -22,6 +23,7 @@ import * as path from "path";
           }),
     ],
     controllers: [UserController],
-    providers: [UserService]
+    providers: [UserService],
+    exports : [UserService]
 })
 export class UserModule {}

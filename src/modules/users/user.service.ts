@@ -2,10 +2,11 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { User } from "./schemas";
 import { IUserCreateRequest, IUserUpdateRequest } from "./interfaces";
+import { Article } from "../articles";
 
 @Injectable()
 export class UserService {
-    constructor(@InjectModel(User) private userModel: typeof User) { }
+    constructor(@InjectModel(User) private readonly userModel: typeof User) { }
 
     async createUser(payload: IUserCreateRequest): Promise<User> {
 
@@ -24,7 +25,8 @@ export class UserService {
         return await this.userModel.findAll({
             attributes : {
                 exclude : ['createdAt','updatedAt','password']
-            }
+            },
+            include : [Article]
         })
     }
 
@@ -33,7 +35,7 @@ export class UserService {
         const user = await this.userModel.findByPk(id,{
             attributes : {
                 exclude : ['createdAt','updatedAt','password']
-            }
+            }        
         })
 
         if(!user)
